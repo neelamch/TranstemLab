@@ -1,0 +1,15 @@
+﻿{
+  "AppUrl": "http://10.155.194.143/GenericHomePage.aspx",
+  "Username": "neelamc",
+  "Password": "Testing!",
+  "BrowserType": "Chrome",
+  "ImplicitWaitTimeout": "10",
+  "PageLoadTimeout": "60",
+  "ScriptTimeout": "60",
+  "SmallWait": "30",
+  "MediumWait": "120",
+  "LargeWait": "300",
+  "logFolderPath": "D:\\Documents",
+  "logLevel": "Info",
+  "logType": "file"
+}
