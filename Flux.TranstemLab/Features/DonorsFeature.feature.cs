@@ -79,28 +79,35 @@ this.ScenarioSetup(scenarioInfo);
 #line 7
  testRunner.And("I click on search button from the Donor Serach Page and I select a identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 8
- testRunner.Then("I click on Add collection Event link from the Donor Detail page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I click on Add collection Event link from the Donor Detail page and fill out the " +
+                    "required fields", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 9
+ testRunner.And("I Click on Save button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Create Birth Event From Donar Page for Existing Recepient")]
-        public virtual void CreateBirthEventFromDonarPageForExistingRecepient()
+        [NUnit.Framework.TestCaseAttribute("Dr.Test", "Texas", "Dr.Jenny", null)]
+        public virtual void CreateBirthEventFromDonarPageForExistingRecepient(string otherPhysician, string location, string otherReferralType, string[] exampleTags)
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Birth Event From Donar Page for Existing Recepient", ((string[])(null)));
-#line 10
-this.ScenarioSetup(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Birth Event From Donar Page for Existing Recepient", exampleTags);
 #line 11
- testRunner.Given("I navigate to TranstemLab application", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 12
- testRunner.Then("I should be navigated to TranstemLab home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Given("I navigate to TranstemLab application", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 13
- testRunner.Then("I click on Donors Link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I should be navigated to TranstemLab home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 14
- testRunner.And("I click on search button from the Donor Serach Page and I select a identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("I click on Donors Link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 15
- testRunner.Then("I click on Add Birth Event link from the Donor Detail page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I click on search button from the Donor Serach Page and I select a identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 16
+ testRunner.Then(string.Format("I click on Add Birth Event link from the Donor Detail page and fill out the requi" +
+                        "red fields {0} {1} {2}", otherPhysician, location, otherReferralType), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 17
+ testRunner.And("I Click on Save button on Add Birth Event page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

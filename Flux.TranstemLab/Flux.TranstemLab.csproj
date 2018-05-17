@@ -146,11 +146,13 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StepDefinitions\DonorsSteps\CollectionEventStep.cs" />
+    <Compile Include="StepDefinitions\DonorsSteps\DonorBirthEventSteps.cs" />
     <Compile Include="StepDefinitions\RecipientSteps\RecipientCreationSteps.cs" />
     <Compile Include="StepDefinitions\TranstemLabHomeSteps.cs" />
     <Compile Include="StepDefinitions\TranstemLabLoginSteps.cs" />
     <Compile Include="StepHelper\Base\Pages.cs" />
     <Compile Include="StepHelper\Base\TranstemLabTestBase.cs" />
+    <Compile Include="StepHelper\Pages\Donors\DonorBirthEventPage.cs" />
     <Compile Include="StepHelper\Pages\Donors\DonorCollectionEventsPage.cs" />
     <Compile Include="StepHelper\Pages\Recipient\RecipientCreationPage.cs" />
     <Compile Include="StepHelper\Pages\TranstemLabHomePage.cs" />

@@ -11,5 +11,7 @@ namespace Flux.TranstemLab.StepHelper.Base
         public TranstemLabLoginPage transtemLabLoginPage;
         public TranstemLabHomePage transtemLabHomePage;
         public DonorCollectionEventsPage donorCollectionEventsPage;
+        public DonorBirthEventPage donorBirthEventPage;
+        
     }
 }

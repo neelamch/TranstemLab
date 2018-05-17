@@ -29,7 +29,7 @@ namespace Flux.TranstemLab.StepDefinitions
             recipientCreationPage.ClickOnAddRecipientBtn();
         }
         
-        [Then(@"I have entered all the required details Test(.*) TestCheck(.*) T(.*) AM(.*)ABC PO(.*)/(.*) Gender Ethnicity and Client Status from the page")]
+        [Then(@"I have entered all the required details Test(.*) (.*) (.*) (.*) (.*) (.*) Gender Ethnicity and Client Status from the page")]
         public void ThenIHaveEnteredAllTheRequiredDetailsTestTestCheckTAMABCPOGenderEthnicityAndClientStatusFromThePage(string RecipientID, string FirstName, string LastName, string MedicalRecord, string CRID, string RegistryID, string BirthDate)
         {
             recipientCreationPage.EnterAllFields(RecipientID, FirstName, LastName, MedicalRecord, CRID, RegistryID, BirthDate);

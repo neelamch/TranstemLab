@@ -6,6 +6,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,7 +20,7 @@ namespace Flux.TranstemLab.StepHelper.Pages.Donors
 
 
         private readonly By _elementSerachBlock = By.Name("ctl00$searchBlock1$ctl03");
-        //public static By _elementDonorsLink = By.XPath("//div[@id='cssmenu']//li/a[text()='Donors']");
+        private readonly By _elementDonorsLink = By.XPath("//div[@id='cssmenu']//li/a[text()='Donors']");
         private readonly By _elementSerachButton = By.Id("ContentPlaceHolder1_btnSearch");
         private readonly By _elementIdentifier = By.LinkText("//*[text()='Last Name']");
         private readonly By _elementListIdentifier = By.XPath("((//table[@id='ContentPlaceHolder1_gv1']//tbody//tr)//td[1]//a[text()])");
@@ -31,27 +32,9 @@ namespace Flux.TranstemLab.StepHelper.Pages.Donors
         private readonly By _elementDrCeSaveBtn = By.Id("ContentPlaceHolder1_ctrlCollectionEvent_gvEventDate_lnkUpdate_0");
         private readonly By _elementDrCeSaveButton = By.Id("ContentPlaceHolder1_ctrlCollectionEvent_btnSave");
         private readonly By _elementDrCeEditButton = By.Id("ContentPlaceHolder1_ctrlCollectionEvent_gvEventDate_lnkEdit_0");
-
-
-
-
-        public bool ClickOnDonorLink(String LinkName)
-        {
-            bool chkDonorLink = false;
-            By _elementDonorsLink = By.XPath("//div[@id='cssmenu']//li/a[text()='" + LinkName + "']");
-            if (Actions.IsDisplayed(_elementDonorsLink))
-            {
-                //Waits.WaitForElementToBeClickable(_elementDonorsLink, WaitType.Small);
-                Actions.Click(_elementSerachButton);
-                if (Actions.IsDisplayed(_elementSerachButton))
-                {
-                    chkDonorLink = true;
-
-                }
-                Console.WriteLine("Donor link is visible ======");
-            }
-            return chkDonorLink;
-        }
+        private readonly By _elementDrCeDonorIDText = By.XPath("//span[@id='ContentPlaceHolder1_spnDonorId'][text()]");
+       
+        
 
         public bool ClickOnSerachButtonFromDonorPage()
         {
@@ -66,25 +49,34 @@ namespace Flux.TranstemLab.StepHelper.Pages.Donors
             }
             return chkSearchButton;
         }
-
-        public void ClickOnIdentifier()
+       public  String donorIDText;
+        public string ClickOnIdentifier()
         {
             ReadOnlyCollection<IWebElement> lstIdentifier = Actions.FindElements(_elementListIdentifier);
             for (int i = 0; i < lstIdentifier.Count; i++)
             {
-                if (i == 3)
+                if (i == 2)
                 {
-                    Thread.Sleep(8000);
-                    String strelem = lstIdentifier[i].Text;
+                    Thread.Sleep(2000);
+                   String strelem = lstIdentifier[i].Text;
                     lstIdentifier[i].Click();
-                    Thread.Sleep(8000);
+                   Thread.Sleep(1000);
+                    if(Actions.IsDisplayed(_elementDrCeDonorIDText))
+                    {
+                        donorIDText = Actions.GetText(_elementDrCeDonorIDText);
+                    }
                     Console.WriteLine("TEXT name is on first identifir here" + strelem);
                 }
             }
+
+            return donorIDText;
         }
+       
+
+
         public bool ClickOnAddCollectionEvent()
-        {
-            bool chkAddCollEvnts = false;
+        {   
+        bool chkAddCollEvnts = false;
             //Thread.Sleep(2000);
 
             if (Actions.IsDisplayed(_elementDonorID))
@@ -100,6 +92,7 @@ namespace Flux.TranstemLab.StepHelper.Pages.Donors
             return chkAddCollEvnts;
         }
 
+        //Below method is for selecting values from Add Collection Event page for "HostpitalCE", "DonorType", "StemCellSource"
         public string[] dropDownListOptionsFromDrCe = new string[] { "ddlHostpitalCE", "ddlDonorType", "ddlStemCellSource" };
         public void ClickOnDropDownOptionsFromDrCe()
         {
@@ -135,21 +128,33 @@ namespace Flux.TranstemLab.StepHelper.Pages.Donors
                 }
             }
         }
+        //This method is for getting Future Date
+        public string GetFutureDate(int noOfDays)
+        {
+            DateTime today = DateTime.Now;
+            DateTime futureDate = today.AddDays(noOfDays);
+            string strDate = futureDate.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+            Console.WriteLine("Date is " + strDate);
+            return strDate;
+        }
 
-        public List<object> mylist = new List<object> { "12345", "5/5/2018", "1011", "6/5/2018", "0521" };
         public string[] DrCeDDLOfCollectionData = new string[] { "TimeZone", "Collector", "ProductDescriptionCode", "DonationType" };
         public string[] DrCeTextFieldsOfCollectionData = new string[] { "CollectionID", "StartDate", "StartTime", "EndDate", "EndTime" };
-
         
         public void EnterValuesInCollectionDataFields()
         {
+            String strdonorIDText = donorIDText + "-1";
+            String StartDate = GetFutureDate(1);
+            String EndDate = GetFutureDate(2);
+
+            List<object> mylist = new List<object> { strdonorIDText, StartDate, "0000", EndDate, "0001" };
             Actions.Click(_elementDrCeCollDataPlusSign);
 
-            Thread.Sleep(8000);
+            Thread.Sleep(4000);
             Actions.Click(By.Id("ContentPlaceHolder1_ctrlCollectionEvent_gvEventDate_txtCollectionID_0"));
             Actions.FindElement(By.Id("ContentPlaceHolder1_ctrlCollectionEvent_gvEventDate_txtCollectionID_0")).SendKeys(mylist[0].ToString());
 
-
+            //Below method is for selecting values from Add Collection Event page for "CollectionID", "StartDate", "StartTime", "EndDate", "EndTime"
             for (int i = 0; i < DrCeTextFieldsOfCollectionData.Length - 1; i++)
             {
                 By _elementDrCeTextFields = By.Id("ContentPlaceHolder1_ctrlCollectionEvent_gvEventDate_txt" + DrCeTextFieldsOfCollectionData[i] + "_0");
@@ -160,11 +165,13 @@ namespace Flux.TranstemLab.StepHelper.Pages.Donors
                 if (Actions.FindElement(_elementDrCeTextFields).Displayed)
                 {
                     Actions.FindElement(_elementDrCeTextFields).SendKeys(Keys.Tab);
+                    Waits.WaitForElementToBeVisible(_elementDrCeTextFields, WaitType.Small);
                     Thread.Sleep(1000);
                     Actions.FindElement(_elementDrCeTextFieldsNext).SendKeys(mylist[i + 1].ToString());
                 }
             }
 
+            //Below method is for selecting values from Add Collection Event page for "TimeZone", "Collector", "ProductDescriptionCode", "DonationType"
             for (int j = 0; j < DrCeDDLOfCollectionData.Length; j++)
             {
 
@@ -193,16 +200,19 @@ namespace Flux.TranstemLab.StepHelper.Pages.Donors
                     }
                 }
             }
+        }
+        //This method is for click on Save Button
+        public void ClickOnSaveButton()
+        {
             Actions.Click(_elementDrCeSaveBtn);
-
-
             if (Actions.IsDisplayed(_elementDrCeEditButton))
             {
                 Console.WriteLine("Update Button is clicked successfully");
             }
-            Actions.Click(_elementDrCeSaveButton);
-
+            
         }
+
+
 
     }
 }
