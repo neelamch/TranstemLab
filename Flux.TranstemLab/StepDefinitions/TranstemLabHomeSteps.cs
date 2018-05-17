@@ -1,4 +1,6 @@
 ﻿using Flux.TranstemLab.StepHelper.Base;
+using NUnit.Framework;
+using System;
 using TechTalk.SpecFlow;
 
 namespace Flux.TranstemLab.StepDefinitions
@@ -17,5 +19,15 @@ namespace Flux.TranstemLab.StepDefinitions
         {
             pages.transtemLabHomePage.VerificationOfHomePage();
         }
+
+        [Then(@"I click on (.*) Link")]
+        public void ThenIClickOnDonorsLink(string LinkName)
+        {
+            pages.donorCollectionEventsPage = pages.transtemLabHomePage.ClickOnDonorLink(LinkName);
+            Console.WriteLine("Donor Page opened successfully");
+        }
+
+
+        
     }
 }

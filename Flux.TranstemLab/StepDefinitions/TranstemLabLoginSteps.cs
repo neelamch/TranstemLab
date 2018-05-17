@@ -55,8 +55,7 @@ namespace Flux.TranstemLab.StepDefinitions
             string password = TestEnvironment.AppSettings["Password"];
 
 
-            pages.transtemLabLoginPage = Application.NewPage<TranstemLabLoginPage>()
-                             .NavigateToLoginPage();
+            pages.transtemLabLoginPage = Application.NewPage<TranstemLabLoginPage>().NavigateToLoginPage();
 
             pages.transtemLabLoginPage.EnterUsername(username);
 
@@ -67,7 +66,5 @@ namespace Flux.TranstemLab.StepDefinitions
             pages.transtemLabHomePage = pages.transtemLabLoginPage .ClickLogin();
 
         }
-
-
     }
 }

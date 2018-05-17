@@ -14,50 +14,40 @@ namespace Flux.TranstemLab.StepDefinitions.Donors
     [Binding]
     public  class CollectionEventStep : TranstemLabTestBase
     {
-        protected DonorCollectionEventsPage donorCollectionEventsPage;
-        protected TranstemLabHomePage transtemLabHomePage;
-
-        private readonly TrasLabContext trasLabContext;
-        public CollectionEventStep(TrasLabContext trasLabContext)
+        private readonly Pages pages;
+        public CollectionEventStep(Pages pages)
         {
-            this.trasLabContext = trasLabContext;
-        }
-
-        [Then(@"I click on (.*) Link")]
-        public void ThenIClickOnDonorsLink(String LinkName)
-        {
-            
-            bool chkDonorLinkOpned = donorCollectionEventsPage.ClickOnDonorLink(LinkName);
-            Assert.True(chkDonorLinkOpned, "Donor Link is NOT opened successfully");
-            Console.WriteLine("Donor Page opened successfully");
+            this.pages = pages;
         }
 
         [Then(@"I click on search button from the Donor Serach Page and I select a identifier")]
         public void ThenIClickOnSearchButtonFromTheDonorSerachPageAndISelectAIdentifier()
         {
-            bool chkSerachBtnClk = donorCollectionEventsPage.ClickOnSerachButtonFromDonorPage();
+            bool chkSerachBtnClk = pages.donorCollectionEventsPage.ClickOnSerachButtonFromDonorPage();
             Assert.True(chkSerachBtnClk, "Not clicked on SEARCH Button, Please try again");
             Console.WriteLine("Clicked on SEARCH button successfully");
-            Thread.Sleep(5000);
-            donorCollectionEventsPage.ClickOnIdentifier();
+            
+            pages.donorCollectionEventsPage.ClickOnIdentifier();
         }
 
-        [Then(@"I click on Add collection Event link from the Donor Detail page")]
+        [Then(@"I click on Add collection Event link from the Donor Detail page and fill out the required fields")]
         public void ThenIClickOnAddCollectionEventLinkFromTheDonorDetailPage()
         {
-            bool chkDrAddCollEvents = donorCollectionEventsPage.ClickOnAddCollectionEvent();
+            bool chkDrAddCollEvents = pages.donorCollectionEventsPage.ClickOnAddCollectionEvent();
             Assert.True(chkDrAddCollEvents, "Verifcation of Add Collection Event page is successful");
             Console.WriteLine("Clicked on Add Collection Event page is successful");
 
-            donorCollectionEventsPage.ClickOnDropDownOptionsFromDrCe();
-            donorCollectionEventsPage.EnterValuesInCollectionDataFields();
+            pages.donorCollectionEventsPage.ClickOnDropDownOptionsFromDrCe();
+            pages.donorCollectionEventsPage.EnterValuesInCollectionDataFields();
         }
 
-        [Then(@"I click on Add Birth Event link from the Donor Detail page")]
-        public void ThenIClickOnAddBirthEventLinkFromTheDonorDetailPage()
+        [Then(@"I Click on Save button")]
+        public void ThenIClickOnSaveButton()
         {
-            
+            pages.donorCollectionEventsPage.ClickOnSaveButton();
         }
+
+
 
     }
 }
